@@ -1,0 +1,149 @@
+@import 'tailwindcss';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource-variable/archivo/standard.css';
+
+/* Night map-room palette (matches the landing page): ink slate with warm paper-tinted text, one
+   amber accent (DS actions), force colours always paired with shape/text so colour is never the
+   only signal. Corners are near-square, like map plates. */
+@theme {
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-display: 'Archivo Variable', 'Archivo', 'IBM Plex Sans', sans-serif;
+
+  --radius-sm: 2px;
+  --radius: 3px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+
+  --color-bg: #0b0f13;
+  --color-panel: #11171d;
+  --color-panel2: #161e25;
+  --color-raised: #1c242b;
+  --color-line: #2a333b;
+  --color-ink: #ece6d8;
+  --color-head: #f2ecdf;
+  --color-muted: #b5afa0;
+  --color-faint: #969184;
+  --color-paper: #eee7d6;
+  --color-paper-ink: #1c1a15;
+
+  --color-accent: #e5a940;
+  --color-accent-ink: #1a1306;
+  --color-blue: #63a2e6;
+  --color-red: #e5675a;
+  --color-unk: #d6bd55;
+  --color-ok: #52b984;
+  --color-warn: #e0a83c;
+  --color-bad: #e5675a;
+  --color-bad-ink: #f4a198;
+
+  --color-t-open: #1b242d;
+  --color-t-forest: #1c3026;
+  --color-t-urban: #282d34;
+  --color-t-river: #1b3a55;
+  --color-t-sea: #142d47;
+  --color-t-ridge: #3a3026;
+  --color-t-marsh: #20302b;
+  --color-t-hills: #2a3128;
+  --color-t-bridge: #4b4f55;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Page titles use the display face (same as the landing page). */
+h1 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+/* Thin scrollbars for dense panels */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+
+.stripes-bad {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--color-bad) 22%, transparent) 0 10px,
+    color-mix(in srgb, var(--color-bad) 8%, transparent) 10px 20px
+  );
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---- MapLibre map (D-016) ---- */
+.vg-map .maplibregl-canvas:focus { outline: none; }
+.vg-map:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+.vg-marker { display: flex; flex-direction: column; align-items: center; pointer-events: none; transition: opacity 300ms; }
+.vg-label, .vg-sub { font-family: var(--font-mono); white-space: nowrap; line-height: 1.15; text-shadow: 0 0 3px #0b0f13, 0 0 3px #0b0f13, 0 0 2px #0b0f13; }
+.vg-label { font-size: 10px; color: var(--color-ink); }
+.vg-sub { font-size: 9px; color: var(--color-muted); }
+.vg-axis { font-family: var(--font-mono); font-size: 12px; color: var(--color-muted); pointer-events: none; }
+.vg-popup .maplibregl-popup-content { background: var(--color-panel); color: var(--color-ink); border: 1px solid var(--color-line); border-radius: 6px; padding: 8px 10px; font-size: 12px; box-shadow: 0 8px 24px rgb(0 0 0 / 0.5); }
+.vg-popup .maplibregl-popup-tip { border-top-color: var(--color-line) !important; border-bottom-color: var(--color-line) !important; }
+.vg-popup .maplibregl-popup-close-button { color: var(--color-muted); font-size: 16px; padding: 0 6px; }
+.vg-pop-h { font-family: var(--font-mono); font-weight: 600; color: var(--color-accent); margin-bottom: 4px; }
+.vg-pop-obj { color: var(--color-accent); }
+.vg-pop-hint { margin-top: 6px; border-top: 1px solid var(--color-line); padding-top: 4px; color: var(--color-accent); font-size: 11px; }
+.vg-mut { color: var(--color-muted); }
+.vg-warn { color: var(--color-warn); }
+.vg-bad { color: var(--color-bad); }
+.vg-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.maplibregl-ctrl-group { background: var(--color-panel) !important; border: 1px solid var(--color-line); }
+.maplibregl-ctrl-group button { filter: invert(0.85); }
+.vg-crowded .vg-label { max-width: 54px; overflow: hidden; text-overflow: ellipsis; font-size: 9px; }
+.vg-crowded .vg-sub { display: none; }
+
+/* ---------------- Landing page (Claude Design port) ---------------- */
+.lp { --lp-ink: #0b0f13; --lp-paper: #eee7d6; --lp-text: #ece6d8; --lp-head: #f2ecdf; --lp-sub: #c9c3b4; --lp-mut: #b5afa0; --lp-line: #2a333b; --lp-amber: #e5a940; background: var(--lp-ink); color: var(--lp-text); overflow-x: hidden; min-height: 100vh; font-family: 'IBM Plex Sans', sans-serif; }
+.lp a { color: var(--lp-amber); text-underline-offset: 3px; }
+.lp a:hover { color: #f3c978; }
+.lp *:focus-visible { outline: 2px solid var(--lp-amber); outline-offset: 3px; }
+.lp input::placeholder { color: #7f7b70; letter-spacing: .3em; }
+.lp .lp-display { font-family: 'Archivo Variable', 'Archivo', sans-serif; }
+.lp .lp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 3px; text-decoration: none; cursor: pointer; font: 600 15px/1 'IBM Plex Sans', sans-serif; }
+.lp .lp-btn-primary { background: var(--lp-amber); color: var(--lp-ink); border: 0; }
+.lp .lp-btn-primary:hover { background: #f0bb5a; color: var(--lp-ink); }
+.lp .lp-btn-dark { background: #1c242b; color: var(--lp-text); border: 1px solid #3a444d; }
+.lp .lp-btn-dark:hover { background: #25303a; color: var(--lp-text); }
+.lp .lp-nav-link { position: relative; padding: 10px clamp(7px, .8vw, 12px); font: 500 13.5px/1 'IBM Plex Sans', sans-serif; color: var(--lp-sub); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; }
+.lp .lp-nav-link:hover { color: var(--lp-text); }
+.lp .lp-nav-link[aria-current='true'] { color: var(--lp-amber); border-bottom-color: var(--lp-amber); }
+@keyframes lpFogDrift { 0% { transform: translate3d(0,0,0) } 50% { transform: translate3d(-3%,1.5%,0) } 100% { transform: translate3d(0,0,0) } }
+@media (prefers-reduced-motion: reduce) { .lp * { animation: none !important; } html { scroll-behavior: auto !important; } }
